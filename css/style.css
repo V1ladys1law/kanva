@@ -60,22 +60,6 @@ button {
     height: 29px;
 }
 
-.logo-mark i:nth-child(1) {
-    background: #f2a64a;
-}
-
-.logo-mark i:nth-child(2) {
-    background: #48a9cf;
-}
-
-.logo-mark i:nth-child(3) {
-    background: #54b9df;
-}
-
-.logo-mark i:nth-child(4) {
-    background: #50c800;
-}
-
 .navigation {
     display: flex;
     align-items: center;
