@@ -4,55 +4,82 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Kanvas — Замовлення картини</title>
-    <link href="https://fonts.googleapis.com/css2?family=Open+Sans:wght@400;700&display=swap" rel="stylesheet">
+
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Open+Sans:wght@400;500;600;700;800&display=swap" rel="stylesheet">
     <link rel="stylesheet" href="css/style.css">
 </head>
 <body>
 
 <header class="header">
-    <div class="logo">
-        <img src="img/logo.png" alt="Kanvas Logo" class="logo-img">
-        <p class="logo-text">Kanvas</p>
-    </div>
+    <div class="header-inner">
+        <a href="#" class="logo">
+            <span class="logo-mark">
+                <i></i><i></i><i></i><i></i>
+            </span>
+            <span>Kanvas</span>
+        </a>
 
-    <nav class="nav">
-        <a href="#gallery" class="nav-link">ГАЛЕРЕЯ</a>
-        <a href="#about" class="nav-link">ПРО НАС</a>
-        <button type="button" class="btn-call">ЗАМОВИТИ ДЗВІНОК</button>
-    </nav>
+        <nav class="navigation">
+            <a href="#">ГАЛЕРЕЯ</a>
+            <a href="#">ПРО НАС</a>
+            <button class="callback-btn" type="button">
+                ЗАМОВИТИ ДЗВІНОК
+            </button>
+        </nav>
+    </div>
 </header>
 
 <main class="main">
     <section class="preview-section">
         <div class="easel-wrapper">
-            <img src="img/malbert.png" class="easel-img" alt="Мольберт">
+            <img src="img/malbert.png" alt="Мальберт" class="easel-img">
             <div class="canvas-box" id="canvas"></div>
         </div>
     </section>
 
     <section class="calculator-section">
         <div class="calculator-card">
+
             <h1>Виберіть розмір</h1>
 
             <div class="preset-sizes">
-                <button type="button" class="size-btn active" data-w="30" data-h="30">30x30</button>
-                <button type="button" class="size-btn" data-w="30" data-h="90">30x90</button>
-                <button type="button" class="size-btn" data-w="90" data-h="120">90x120</button>
-                <button type="button" class="size-btn" data-w="90" data-h="150">90x150</button>
+                <button type="button" class="size-btn active"
+                    data-w="30" data-h="30">30x30</button>
+
+                <button type="button" class="size-btn"
+                    data-w="30" data-h="90">30x90</button>
+
+                <button type="button" class="size-btn"
+                    data-w="90" data-h="120">90x120</button>
+
+                <button type="button" class="size-btn"
+                    data-w="90" data-h="150">90x150</button>
+
+                <button type="button" class="action-btn" id="set-size-btn">
+                    ЗАДАТИ РОЗМІР
+                </button>
             </div>
 
             <div class="custom-size-wrapper">
-                <div class="input-group">
-                    <label for="width">ширина (см)</label>
-                    <input type="number" id="width" value="30" min="10" max="300">
+                <div class="dimension-field">
+                    <label for="width">ширина</label>
+                    <input type="number" id="width"
+                        min="10" max="300" value="30">
                 </div>
 
-                <p class="size-separator">x</p>
+                <span class="dimension-x">X</span>
 
-                <div class="input-group">
-                    <label for="height">висота (см)</label>
-                    <input type="number" id="height" value="30" min="10" max="300">
+                <div class="dimension-field">
+                    <label for="height">висота</label>
+                    <input type="number" id="height"
+                        min="10" max="300" value="30">
                 </div>
+
+                <button type="button" class="action-btn" id="calculate-btn">
+                    ПІДРАХУВАТИ
+                </button>
             </div>
 
             <hr class="divider">
@@ -60,39 +87,54 @@
             <h2>Додаткові опції</h2>
 
             <div class="options-list">
-                <label class="option-item">
-                    <input type="checkbox" data-price="35" class="option-checkbox">
-                    <p class="option-label">дорожче полотно</p>
-                    <p class="option-price">+ 35 грн</p>
+                <label class="option-row">
+                    <span class="option-left">
+                        <input type="checkbox" class="option-checkbox"
+                            data-price="35">
+                        <span class="custom-checkbox"></span>
+                        <span class="option-name">дорожче полотно</span>
+                    </span>
+                    <span class="option-price">+ 35 грн</span>
                 </label>
 
-                <label class="option-item">
-                    <input type="checkbox" data-price="10" class="option-checkbox">
-                    <p class="option-label">з рамкою</p>
-                    <p class="option-price">+ 10 грн</p>
+                <label class="option-row">
+                    <span class="option-left">
+                        <input type="checkbox" class="option-checkbox"
+                            data-price="10">
+                        <span class="custom-checkbox"></span>
+                        <span class="option-name">з рамкою</span>
+                    </span>
+                    <span class="option-price">+ 10 грн</span>
                 </label>
 
-                <label class="option-item">
-                    <input type="checkbox" data-price="40" class="option-checkbox">
-                    <p class="option-label">з доставкою (Нова Пошта)</p>
-                    <p class="option-price">+ 40 грн</p>
+                <label class="option-row">
+                    <span class="option-left">
+                        <input type="checkbox" class="option-checkbox"
+                            data-price="40">
+                        <span class="custom-checkbox"></span>
+                        <span class="option-name">з доставкою (Нова Пошта)</span>
+                    </span>
+                    <span class="option-price">+ 40 грн</span>
                 </label>
             </div>
 
-            <hr class="divider">
+            <hr class="divider bottom-divider">
 
             <div class="checkout-block">
+                <button type="button" class="btn-buy" id="buy-btn">
+                    ПРИДБАТИ
+                </button>
+
                 <div class="total-price-wrap">
-                    <button type="button" class="btn-buy" id="buy-btn">ПРИДБАТИ</button>
-                    <div class="aic">
-                        <p class="total-title">ЗАГАЛЬНА СУМА:</p>
-                        <div id="aic2">
-                            <span id="total-price">345</span>
-                            <p class="currency">грн</p>
-                        </div>
+                    <span class="total-title">ЗАГАЛЬНА СУМА:</span>
+
+                    <div class="total-amount">
+                        <span id="total-price">345</span>
+                        <span class="currency">грн</span>
                     </div>
                 </div>
             </div>
+
         </div>
     </section>
 </main>
