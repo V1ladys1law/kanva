@@ -44,7 +44,7 @@ button {
 .logo {
     display: flex;
     align-items: center;
-    gap: 8px;
+    gap: 15px;
     color: #3d5665;
     text-decoration: none;
     font-size: 34px;
