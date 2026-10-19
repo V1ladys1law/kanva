@@ -3,6 +3,7 @@ document.addEventListener("DOMContentLoaded", () => {
     const heightInput = document.getElementById("height");
     const canvas = document.getElementById("canvas");
     const totalPrice = document.getElementById("total-price");
+    const customSize = document.querySelector(".custom-size-wrapper");
 
     const presetButtons = document.querySelectorAll(".size-btn");
     const options = document.querySelectorAll(".option-checkbox");
@@ -11,27 +12,22 @@ document.addEventListener("DOMContentLoaded", () => {
     const calculateButton = document.getElementById("calculate-btn");
     const buyButton = document.getElementById("buy-btn");
 
-    // Початкова вартість полотна 30 × 30 см.
     const BASE_PRICE = 345;
     const BASE_AREA = 30 * 30;
-
-    // Масштаб полотна на екрані.
     const PIXELS_PER_CM = 3.5;
     const MAX_CANVAS_WIDTH = 360;
     const MAX_CANVAS_HEIGHT = 500;
 
-    // Перевірка введених розмірів.
+    let priceSize = { width: 30, height: 30 };
+
     function getDimensions() {
         const width = Number(widthInput.value);
         const height = Number(heightInput.value);
 
         if (
-            !Number.isFinite(width) ||
-            !Number.isFinite(height) ||
-            width < 10 ||
-            width > 300 ||
-            height < 10 ||
-            height > 300
+            !Number.isFinite(width) || !Number.isFinite(height) ||
+            width < 10 || width > 300 ||
+            height < 10 || height > 300
         ) {
             alert("Введіть ширину та висоту від 10 до 300 см.");
             return null;
@@ -40,10 +36,7 @@ document.addEventListener("DOMContentLoaded", () => {
         return { width, height };
     }
 
-    // Змінює лише візуальний розмір полотна.
-    // Масштаб по ширині та висоті завжди однаковий,
-    // тому пропорції фізичних розмірів зберігаються.
-    function updateCanvas(width, height) {
+    function updateCanvas({ width, height }) {
         const scale = Math.min(
             PIXELS_PER_CM,
             MAX_CANVAS_WIDTH / width,
@@ -54,9 +47,8 @@ document.addEventListener("DOMContentLoaded", () => {
         canvas.style.height = `${height * scale}px`;
     }
 
-    // Розрахунок ціни з урахуванням площі та опцій.
-    function calculateTotal(width, height) {
-        let price = BASE_PRICE * (width * height) / BASE_AREA;
+    function updatePrice() {
+        let price = BASE_PRICE * (priceSize.width * priceSize.height) / BASE_AREA;
 
         options.forEach((option) => {
             if (option.checked) {
@@ -64,71 +56,56 @@ document.addEventListener("DOMContentLoaded", () => {
             }
         });
 
-        return Math.round(price);
+        totalPrice.textContent = Math.round(price);
     }
 
-    // Початковий стан.
-    updateCanvas(30, 30);
-    totalPrice.textContent = "345";
-
-    // Пресети змінюють тільки поля вводу.
     presetButtons.forEach((button) => {
         button.addEventListener("click", () => {
-            widthInput.value = button.dataset.w;
-            heightInput.value = button.dataset.h;
+            const size = {
+                width: Number(button.dataset.w),
+                height: Number(button.dataset.h)
+            };
 
-            presetButtons.forEach((item) => {
-                item.classList.remove("active");
-            });
+            widthInput.value = size.width;
+            heightInput.value = size.height;
+            priceSize = size;
 
+            presetButtons.forEach((item) => item.classList.remove("active"));
             button.classList.add("active");
+
+            updateCanvas(size);
+            updatePrice();
         });
     });
 
-    // При ручному введенні знімаємо активний пресет.
-    // Полотно та ціна автоматично не змінюються.
     [widthInput, heightInput].forEach((input) => {
         input.addEventListener("input", () => {
-            presetButtons.forEach((button) => {
-                button.classList.remove("active");
-            });
+            presetButtons.forEach((button) => button.classList.remove("active"));
         });
     });
 
-    // Кнопка «ЗАДАТИ РОЗМІР».
-    // Змінює тільки візуалізацію.
+    options.forEach((option) => {
+        option.addEventListener("change", updatePrice);
+    });
+
     setSizeButton.addEventListener("click", () => {
-        const dimensions = getDimensions();
+        customSize.classList.add("open");
 
-        if (!dimensions) {
-            return;
-        }
+        const size = getDimensions();
+        if (!size) return;
 
-        updateCanvas(dimensions.width, dimensions.height);
+        presetButtons.forEach((button) => button.classList.remove("active"));
+        updateCanvas(size);
     });
 
-    // Кнопка «ПІДРАХУВАТИ».
-    // Змінює тільки загальну ціну.
     calculateButton.addEventListener("click", () => {
-        const dimensions = getDimensions();
+        const size = getDimensions();
+        if (!size) return;
 
-        if (!dimensions) {
-            return;
-        }
-
-        const price = calculateTotal(
-            dimensions.width,
-            dimensions.height
-        );
-
-        totalPrice.textContent = String(price);
+        priceSize = size;
+        updatePrice();
     });
 
-    // Демонстраційна кнопка покупки.
-    buyButton.addEventListener("click", () => {
-        alert(
-            "Кнопка покупки поки що демонстраційна. " +
-            "Для оформлення замовлення потрібно підключити форму."
-        );
-    });
+    updateCanvas(priceSize);
+    updatePrice();
 });

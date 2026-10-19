@@ -238,14 +238,16 @@ button {
     margin-left: auto;
 }
 
-/* CUSTOM DIMENSIONS */
-
 .custom-size-wrapper {
-    display: flex;
+    display: none;
     flex-wrap: nowrap;
     align-items: flex-end;
     gap: 18px;
     margin-bottom: 38px;
+}
+
+.custom-size-wrapper.open {
+    display: flex;
 }
 
 .dimension-field {
