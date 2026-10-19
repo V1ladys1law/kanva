@@ -13,9 +13,7 @@ document.addEventListener("DOMContentLoaded", () => {
 
     const BASE_PRICE = 345;
     const BASE_AREA = 30 * 30;
-    const PIXELS_PER_CM = 3.5;
-    const MAX_CANVAS_WIDTH = 360;
-    const MAX_CANVAS_HEIGHT = 500;
+    const SCALE = 2;
 
     let currentSize = { width: 30, height: 30 };
 
@@ -36,8 +34,8 @@ document.addEventListener("DOMContentLoaded", () => {
     }
 
     function updateCanvas({ width, height }) {
-        canvas.style.width = `${width * 2}px`;
-        canvas.style.height = `${height * 2}px`;
+        canvas.style.width = `${width * SCALE}px`;
+        canvas.style.height = `${height * SCALE}px`;
     }
 
     function updatePrice() {
