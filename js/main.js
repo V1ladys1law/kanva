@@ -36,14 +36,8 @@ document.addEventListener("DOMContentLoaded", () => {
     }
 
     function updateCanvas({ width, height }) {
-        const scale = Math.min(
-            PIXELS_PER_CM,
-            MAX_CANVAS_WIDTH / width,
-            MAX_CANVAS_HEIGHT / height
-        );
-
-        canvas.style.width = `${width * scale}px`;
-        canvas.style.height = `${height * scale}px`;
+        canvas.style.width = `${width}px`;
+        canvas.style.height = `${height}px`;
     }
 
     function updatePrice() {
