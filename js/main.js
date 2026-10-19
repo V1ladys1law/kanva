@@ -36,8 +36,8 @@ document.addEventListener("DOMContentLoaded", () => {
     }
 
     function updateCanvas({ width, height }) {
-        canvas.style.width = `${width}px`;
-        canvas.style.height = `${height}px`;
+        canvas.style.width = `${width * 2}px`;
+        canvas.style.height = `${height * 2}px`;
     }
 
     function updatePrice() {
